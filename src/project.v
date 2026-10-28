@@ -21,6 +21,9 @@ module tt_um_CPU8_LNMIIT (
     wire  run = uio_in[0];
     wire  [7:0] out_data;
 
+    assign uio_out  = 8'b0; //not used 
+    assign uio_oe  = 0;
+    
     TCPU_8 u_tcpu(
         .clk        (clk),
         .rst_n      (rst_n),
@@ -32,8 +35,7 @@ module tt_um_CPU8_LNMIIT (
     
   // All output pins must be assigned. If not used, assign to 0.
   assign uo_out  = out_data;  // Example: ou_out is the sum of ui_in and uio_i
-  assign uio_out  = 8'b0; //not used 
-  assign uio_oe  = 0;
+  
     
   // List all unused inputs to prevent warnings
     wire _unused = &{ena, uio_in[7:2], 1'b0};
