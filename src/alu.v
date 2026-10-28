@@ -16,6 +16,7 @@ module alu (
   localparam [2:0] OP_LOAD = 3'b000;
   localparam [2:0] OP_ADD  = 3'b001;
   localparam [2:0] OP_SUB  = 3'b010;
+  localparam [2:0] OP_XOR  = 3'b110;
 
   // Combinational ALU: default is hold, so no latch is inferred
   always @* begin : alu_select
@@ -29,6 +30,9 @@ module alu (
       end
       OP_SUB : begin : alu_sub
         o_alu_out = i_acc - i_imm;
+      end
+       OP_XOR : begin : alu_xor
+        o_alu_out = i_acc ^ i_imm;
       end
       default : begin : alu_hold
         o_alu_out = i_acc;
