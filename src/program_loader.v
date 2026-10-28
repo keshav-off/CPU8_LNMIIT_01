@@ -19,15 +19,15 @@ module program_loader (
 );
 
   // Previous sample of i_prog_load (for edge detection)
-  reg ir_pl_q;
+  reg ir_prev_prog_load;
 
   // Rising edge of i_prog_load, only while i_run = 0
-  assign o_load_pulse = i_prog_load & ~ir_pl_q & ~i_run;
+  assign o_load_pulse = i_prog_load & ~ir_prev_prog_load & ~i_run;
 
   // ir_pl_q follows i_prog_load every edge, o_load_addr has a
   // synchronous reset
   always @(posedge clk) begin : loader_registers
-    ir_pl_q <= i_prog_load;
+    ir_prev_prog_load <= i_prog_load;
     if (!rst_n) begin : reset_load_addr
       o_load_addr <= 3'd0;
     end else if (o_load_pulse) begin : step_load_addr
