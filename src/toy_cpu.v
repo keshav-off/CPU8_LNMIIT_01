@@ -22,7 +22,6 @@ module toy_cpu (
 
   // Opcodes used by the top level (spec 6.2)
   localparam [2:0] OP_STORE = 3'b011;
-  localparam [2:0] OP_OUT   = 3'b110;
 
   // Architectural state (names fixed by the spec)
   wire [2:0] pc;
@@ -119,10 +118,10 @@ module toy_cpu (
     .o_pc     (pc)
   );
 
-  // Next OUT value: STORE and OUT copy the pre-edge ACC
+  // Next OUT value: STORE copy the pre-edge ACC
   always @* begin : next_out
     ir_out_r_nxt = out_r;
-    if (is_op == OP_STORE || is_op == OP_OUT) begin : out_write
+    if (is_op == OP_STORE) begin : out_write
       ir_out_r_nxt = acc;
     end
   end
